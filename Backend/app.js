@@ -11,18 +11,6 @@ mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?
     console.log("connection failed")
 });
 
-// const post  = [ {
-//     id:"123",
-//     title:'title',
-//     content:"this is content"
-// },
-// {
-//     id:"123",
-//     title:'title',
-//     content:"this is content"
-// }, 
-// ]
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
@@ -41,10 +29,14 @@ app.use(function(req, res, next) {
           content :req.body.content
       })
       console.log(post)
-      post.save();
-      res.status(201).json({
-          message:"New Post is addedd successfully"
-      })
+      post.save()
+      .then(createdPost =>{
+        res.status(201).json({
+            message:"New Post is addedd successfully",
+            postId:createdPost._id
+        })
+      });
+      
   })
 
 app.get("/api/posts",(req,res,next)=>{

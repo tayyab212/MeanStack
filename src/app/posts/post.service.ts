@@ -42,4 +42,12 @@ export class PostsService {
                 this.postsUpdated.next([...this.posts]);
             })
     }
+
+
+    deletePost(postId:string){
+        this.client.delete("http://localhost:3000/api/posts/"+postId)
+        .subscribe(()=>{
+            console.log("deleted");
+        })
+    }
 }

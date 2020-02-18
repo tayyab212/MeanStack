@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import { HeaderComponent } from './header/header/header.component';
 import { PostlistComponent } from './posts/postlist/postlist/postlist.component';
 import { PostsService } from './posts/post.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { PostsService } from './posts/post.service';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
   providers: [PostsService],
   bootstrap: [AppComponent]

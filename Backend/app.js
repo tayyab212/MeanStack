@@ -11,17 +11,17 @@ mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?
     console.log("connection failed")
 });
 
-const post  = [ {
-    id:"123",
-    title:'title',
-    content:"this is content"
-},
-{
-    id:"123",
-    title:'title',
-    content:"this is content"
-}, 
-]
+// const post  = [ {
+//     id:"123",
+//     title:'title',
+//     content:"this is content"
+// },
+// {
+//     id:"123",
+//     title:'title',
+//     content:"this is content"
+// }, 
+// ]
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
@@ -47,11 +47,15 @@ app.use(function(req, res, next) {
       })
   })
 
-app.use("/api/posts",(req,res,next)=>{
-res.status(200).json({
-    message :'Message',
-    posts: post
-})
+app.get("/api/posts",(req,res,next)=>{
+    PostModel.find()
+    .then(document => {
+        res.status(200).json({
+            message :'Message',
+            posts: document
+        })
+    });
+
 })
 
 module.exports = app;

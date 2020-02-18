@@ -2,6 +2,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 const PostModel = require('./models/post')
+const mongoose = require('mongoose')
+mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?retryWrites=true&w=majority")
+.then(()=>{
+    console.log("connected to database")
+})
+.catch(()=>{
+    console.log("connection failed")
+});
+
 const post  = [ {
     id:"123",
     title:'title',
@@ -32,6 +41,7 @@ app.use(function(req, res, next) {
           content :req.body.content
       })
       console.log(post)
+      post.save();
       res.status(201).json({
           message:"New Post is addedd successfully"
       })

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const bodyParser = require('body-parser')
 const post  = [ {
     id:"123",
     title:'title',
@@ -13,6 +13,11 @@ const post  = [ {
 }, 
 ]
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
+
+
+
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST,PATCH,DELETE,OPTIONS');
@@ -20,7 +25,15 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use("/api/posts",(req,res,next)=>{
+  app.post('/api/posts',(req,res)=>{
+      const post =req.body;
+      console.log(post)
+      res.status(201).json({
+          message:"New Post is addedd successfully."
+      })
+  })
+
+app.get ("/api/posts",(req,res,next)=>{
 res.status(200).json({
     message :'Message',
     posts: post

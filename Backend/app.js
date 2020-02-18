@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
+const PostModel = require('./models/post')
 const post  = [ {
     id:"123",
     title:'title',
@@ -26,14 +27,17 @@ app.use(function(req, res, next) {
   });
 
   app.post('/api/posts',(req,res)=>{
-      const post =req.body;
+      const post =new PostModel({
+          title:req.body.title,
+          content :req.body.content
+      })
       console.log(post)
       res.status(201).json({
-          message:"New Post is addedd successfully."
+          message:"New Post is addedd successfully"
       })
   })
 
-app.get ("/api/posts",(req,res,next)=>{
+app.use("/api/posts",(req,res,next)=>{
 res.status(200).json({
     message :'Message',
     posts: post

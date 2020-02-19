@@ -1,9 +1,7 @@
 
- textarea {
+textarea {
     width: 100%;
 } 
-
-
 .example-form {
     min-width: 150px;
     max-width: 500px;
@@ -16,4 +14,8 @@
 
   mat-spinner {
       margin: auto;
+  }
+
+  input[type="file"] {
+      visibility: hidden;
   }

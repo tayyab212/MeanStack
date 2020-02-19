@@ -15,7 +15,7 @@ export class PostCreateComponent implements OnInit {
   enterContent;
   private mode = 'create'
   private postId: string;
-  private post: Post;
+  public post: Post;
   constructor(private postService: PostsService, private route: ActivatedRoute) { }
 
   ngOnInit() {

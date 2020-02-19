@@ -68,7 +68,7 @@ app.put('/api/posts/:id', (req, res, next) => {
         title: req.body.title,
         content: req.body.content
     })
-    PostModel.updateOne({ _id: req.body.id }, post)
+    PostModel.updateOne({ _id: req.body.id }, post) 
         .then((result) => {
             console.log(result);
             res.status(200).json({
@@ -78,6 +78,19 @@ app.put('/api/posts/:id', (req, res, next) => {
         })
 })
 
+
+app.get("/api/posts/:id",(req,res,next)=>{
+    PostModel.findById(req.params.id)
+    .then(post => {
+        if(post){
+            res.status(200).json(post);
+        }else{
+            res.status(404).json({
+                message:"not found"
+            })
+        }
+    })
+})
 
 
 module.exports = app;

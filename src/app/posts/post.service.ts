@@ -35,7 +35,7 @@ export class PostsService {
 
     addPost(title: string, content: string) {
         const post: Post = { id: null, title: title, content: content };
-        this.client.post<{ message: string,postId:string }>('http://localhost:3000/api/posts', post)
+        this.client.post<{ message: string, postId: string }>('http://localhost:3000/api/posts', post)
             .subscribe(postsData => {
                 console.log(postsData.message)
                 const id = postsData.postId;
@@ -46,25 +46,29 @@ export class PostsService {
     }
 
 
-    deletePost(postId:string){
-        this.client.delete("http://localhost:3000/api/posts/"+postId)
-        .subscribe(()=>{
-            debugger;
-           const updatedposts = this.posts.filter(post => post.id !== postId);
-           this.posts = updatedposts;
-           this.postsUpdated.next([...this.posts]);
-        })
+    deletePost(postId: string) {
+        this.client.delete("http://localhost:3000/api/posts/" + postId)
+            .subscribe(() => {
+                debugger;
+                const updatedposts = this.posts.filter(post => post.id !== postId);
+                this.posts = updatedposts;
+                this.postsUpdated.next([...this.posts]);
+            })
     }
 
-    getPost(id:string){
-        return {...this.posts.find(p=> p.id ==id)}
+    getPost(id: string) {
+        return this.client.get<{_id:string,title:string,content:string}>("http://localhost:3000/api/posts/"+id);
     }
 
-    updatePost(id:string,title:string,conten:string){
-        const post ={id:id,title:title,content:conten};
-        this.client.put("http://localhost:3000/api/posts/"+id,post)
-        .subscribe(response =>{
-            console.log(response);
-        })
+    updatePost(id: string, title: string, conten: string) {
+        const post = { id: id, title: title, content: conten };
+        this.client.put("http://localhost:3000/api/posts/" + id, post)
+            .subscribe(response => {
+                const updatedPost = [...this.posts];
+                const oldPostIndex = updatedPost.findIndex(p => p.id === post.id);
+                updatedPost[oldPostIndex] = post;
+                this.posts = updatedPost;
+                this.postsUpdated.next([...this.posts]);
+            })
     }
 }

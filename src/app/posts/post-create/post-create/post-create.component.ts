@@ -16,6 +16,7 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create'
   private postId: string;
   public post: Post;
+  isloading =false;
   constructor(private postService: PostsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -44,12 +45,11 @@ export class PostCreateComponent implements OnInit {
       title: form.value.title,
       content: form.value.content
     }
+    this.isloading = true;
     if (this.mode == 'create') {
-
       this.postService.addPost(form.value.title, form.value.content)
     } else {
       this.postService.updatePost(this.postId, form.value.title, form.value.content)
-
     }
 
     form.reset();

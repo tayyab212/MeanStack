@@ -34,7 +34,7 @@ export class PostsService {
     }
 
     addPost(title: string, content: string) {
-        const post: Post = { Id: null, title: title, content: content };
+        const post: Post = { id: null, title: title, content: content };
         this.client.post<{ message: string,postId:string }>('http://localhost:3000/api/posts', post)
             .subscribe(postsData => {
                 console.log(postsData.message)
@@ -53,6 +53,18 @@ export class PostsService {
            const updatedposts = this.posts.filter(post => post.id !== postId);
            this.posts = updatedposts;
            this.postsUpdated.next([...this.posts]);
+        })
+    }
+
+    getPost(id:string){
+        return {...this.posts.find(p=> p.id ==id)}
+    }
+
+    updatePost(id:string,title:string,conten:string){
+        const post ={id:id,title:title,content:conten};
+        this.client.put("http://localhost:3000/api/posts/"+id,post)
+        .subscribe(response =>{
+            console.log(response);
         })
     }
 }

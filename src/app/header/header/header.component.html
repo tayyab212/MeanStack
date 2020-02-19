@@ -1,3 +1,9 @@
-<mat-toolbar>
-    
+<mat-toolbar style="background-color: blue;">
+    <span><a [routerLink]="['/']">MyMessages</a></span>
+    <span class="space"></span>
+    <ul>
+        <li>
+            <a routerLinkActive="mat-accent"  mat-button [routerLink]="['/create']">New Post</a>
+        </li>
+    </ul>
 </mat-toolbar>

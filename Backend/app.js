@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const postRoutes = require('../Backend/routes/posts')
 const mongoose = require('mongoose');
 
+
 mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?retryWrites=true&w=majority")
     .then(() => {
         console.log("connected to database")

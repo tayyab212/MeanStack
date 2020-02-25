@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../../post.model';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PostsService } from '../../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import  {mimeType} from '../../../../Validators/mime-type.valiator'
+import { async } from '@angular/core/testing';
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
@@ -18,6 +20,7 @@ export class PostCreateComponent implements OnInit {
   public post: Post;
   isloading = false;
   postForm: FormGroup;
+  imagepreview :any;
   constructor(private postService: PostsService, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -25,7 +28,10 @@ export class PostCreateComponent implements OnInit {
     this.postForm = this.fb.group({
       'title': ["", [Validators.required, Validators.minLength(3)]],
       'content': ["", [Validators.required]],
-      'image':["",[Validators.required]]
+    image: new FormControl(null,{
+     validators:[Validators.required],
+     asyncValidators:[mimeType]
+    })
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -34,7 +40,7 @@ export class PostCreateComponent implements OnInit {
         this.postId = paramMap.get('postId');
         this.postService.getPost(this.postId).subscribe(postData => {
           this.post = { id: postData._id, title: postData.title, content: postData.content };
-          this.postForm.setValue({
+          this.postForm.patchValue({
            title:this.post.title,
            content:this.post.content 
           })
@@ -61,7 +67,7 @@ export class PostCreateComponent implements OnInit {
     }
     this.isloading = true;
     if (this.mode == 'create') {
-      this.postService.addPost(this.postForm.value.title, this.postForm.value.content)
+      this.postService.addPost(this.postForm.value.title, this.postForm.value.content,this.postForm.value.image)
     } else {
       this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content)
     }
@@ -73,16 +79,13 @@ export class PostCreateComponent implements OnInit {
   get content() {return this.postForm.get('content');}
   url: any;
   onSelectFile(event) {
-    debugger;                // called each time file input changes
-      if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
-  
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-  
-        reader.onload = (event) => { // called once readAsDataURL is completed
-          this.url = event.target.result;
-        }
-      }
+    const file = (event.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({image:file})
+    this.postForm.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagepreview = reader.result;
+    }
+    reader.readAsDataURL(file);
   }
-
 }

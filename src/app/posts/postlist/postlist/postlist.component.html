@@ -4,6 +4,10 @@
         <mat-expansion-panel-header>
             {{p.title}}
         </mat-expansion-panel-header>
+        <div class="">
+     <img [src]="p.imagePath" alt=" ">
+     {{p.imagePath}}
+        </div>
         <p> {{p.content}}</p>
         <mat-action-row>
             <button mat-button color="primary" [routerLink]="['edit',p.id]">Edit</button>

@@ -27,24 +27,26 @@ const mystorage = multer.diskStorage({
     }
 })
 
-
-
 router.post("", multer({storage:mystorage}).single("image"),(req, res) => {
+    const url = req.protocol + "//:" + req.get("host");
     const post = new PostModel({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: url +"/images/"+req.file.filename
     })
     console.log(post)
     post.save()
         .then(createdPost => {
             res.status(201).json({
                 message: "New Post is addedd successfully",
-                postId: createdPost._id
+              post: {
+                  ...createdPost,
+                  id:createdPost._id
+              }
+              
             })
         });
-
 })
-
 router.get("", (req, res, next) => {
     PostModel.find()
         .then(document => {
@@ -53,9 +55,7 @@ router.get("", (req, res, next) => {
                 posts: document
             })
         });
-
 })
-
 
 router.delete("/:id", (req, res, next) => {
     console.log(req.params.id);
@@ -83,7 +83,6 @@ router.put("/:id", (req, res, next) => {
             })
         })
 })
-
 
 router.get("/:id",(req,res,next)=>{
     PostModel.findById(req.params.id)

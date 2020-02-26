@@ -39,7 +39,7 @@ export class PostCreateComponent implements OnInit {
         this.mode = 'edit'
         this.postId = paramMap.get('postId');
         this.postService.getPost(this.postId).subscribe(postData => {
-          this.post = { id: postData._id, title: postData.title, content: postData.content };
+          this.post = { id: postData._id, title: postData.title, content: postData.content,imagePath:null };
           this.postForm.patchValue({
            title:this.post.title,
            content:this.post.content 
@@ -63,7 +63,7 @@ export class PostCreateComponent implements OnInit {
       id: null,
       title: this.postForm.value.title,
       content: this.postForm.value.content,
-    
+     imagePath:null
     }
     this.isloading = true;
     if (this.mode == 'create') {

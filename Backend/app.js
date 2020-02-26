@@ -16,7 +16,8 @@ mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-//app.use("/images",express.static('/src/assets/images'));
+
+app.use("/images",express.static(path.join("../Backend/images")));
 
 
 app.use(function (req, res, next) {

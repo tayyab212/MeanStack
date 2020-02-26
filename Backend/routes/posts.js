@@ -17,7 +17,7 @@ const mystorage = multer.diskStorage({
             error = null;
         }
         console.log(file)
-       cb(error,"../Backend/images"); 
+       cb(error,"../src/assets/images"); 
        console.log(error);
     },
     filename:(req,file,cb) => {
@@ -32,8 +32,8 @@ router.post("", multer({storage:mystorage}).single("image"),(req, res) => {
     const post = new PostModel({
         title: req.body.title,
         content: req.body.content,
-        imagePath: url +"/images/"+req.file.filename
-    })
+        imagePath:  req.file.filename
+    });
     console.log(post)
     post.save()
         .then(createdPost => {

@@ -68,12 +68,20 @@ router.delete("/:id", (req, res, next) => {
 
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id",multer({storage:mystorage}).single("image") ,(req, res, next) => {
+    console.log(req.file);
+    let imagePath= req.body.imagePath;
+    if(req.file){
+        const url = req.protocol + "//:" + req.get("host");
+        imagePath: "http://localhost:3000"+ "/images/" +req.file.filename;
+    }
     const post = new PostModel({
         _id:req.body.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath:imagePath
     })
+    console.log(post);
     PostModel.updateOne({ _id: req.body.id }, post) 
         .then((result) => {
             console.log(result);

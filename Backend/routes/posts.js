@@ -16,9 +16,7 @@ const mystorage = multer.diskStorage({
         if(isValid){
             error = null;
         }
-        console.log(file)
        cb(error,"../Backend/images"); 
-       console.log(error);
     },
     filename:(req,file,cb) => {
         const name = file.originalname.toLowerCase().split(' ').join('-');
@@ -34,7 +32,7 @@ router.post("", multer({storage:mystorage}).single("image"),(req, res) => {
         content: req.body.content,
         imagePath: "http://localhost:3000"+ "/images/" +req.file.filename
     });
-    console.log(post)
+    console.log("New Post"+post)
     post.save()
         .then(createdPost => {
             res.status(201).json({
@@ -58,9 +56,7 @@ router.get("", (req, res, next) => {
 })
 
 router.delete("/:id", (req, res, next) => {
-    console.log(req.params.id);
     PostModel.deleteOne({ _id: req.params.id }).then(result => {
-        console.log(result);
         res.status(200).json({
             message: "Post deleted"
         })
@@ -69,22 +65,22 @@ router.delete("/:id", (req, res, next) => {
 });
 
 router.put("/:id",multer({storage:mystorage}).single("image") ,(req, res, next) => {
-    console.log(req.file);
-    let imagePath= req.body.imagePath;
+    console.log("Request Body" + req.body.id,req.body.content,req.body.image,req.file);
+    let ImagePath= req.body.image;
     if(req.file){
         const url = req.protocol + "//:" + req.get("host");
-        imagePath: "http://localhost:3000"+ "/images/" +req.file.filename;
+        ImagePath: "http://localhost:3000"+ "/images/" +req.file.filename
+        console.log("this is file");
     }
     const post = new PostModel({
         _id:req.body.id,
         title: req.body.title,
         content: req.body.content,
-        imagePath:imagePath
-    })
-    console.log(post);
+        imagePath:ImagePath
+    });
+    console.log("Updated Post :" +post);
     PostModel.updateOne({ _id: req.body.id }, post) 
         .then((result) => {
-            console.log(result);
             res.status(200).json({
                 message: "update successfull",
                 post: result

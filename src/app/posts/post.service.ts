@@ -73,11 +73,11 @@ export class PostsService {
         return this.client.get<{ _id: string, title: string, content: string,imagePath:string }>("http://localhost:3000/api/posts/" + id);
     }
 
-    updatePost(id: string, title: string, conten: string, image: File | string) {
+    updatePost(id: string, title: string, conten: string, image: File | string){
         debugger;
         let postData;
-        if (typeof (postData) == 'object') {
-            const postData = new FormData();
+        if (typeof (image) == 'object') {
+             postData = new FormData();
             postData.append("id", id); 
             postData.append("title", title); 
             postData.append("content", conten);
@@ -87,7 +87,7 @@ export class PostsService {
                 id: id,
                 title: title,
                 conten: conten,
-                imagePath: image
+                image: image
             }
         }
 

@@ -71,7 +71,7 @@ export class PostCreateComponent implements OnInit {
     if (this.mode == 'create') {
       this.postService.addPost(this.postForm.value.title, this.postForm.value.content,this.postForm.value.image)
     } else {
-      this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content,this.postForm.value.imagePath)
+      this.postService.updatePost(this.postId, this.postForm.value.title, this.postForm.value.content,this.postForm.value.image)
     }
     this.postForm.reset();
   }

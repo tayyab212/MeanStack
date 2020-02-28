@@ -13,7 +13,7 @@ export class PostlistComponent implements OnInit,OnDestroy {
 private postSub :Subscription; 
  isloading =false;
     post: Post[] =[];
-    totoalPost=10;
+    totoalPost=0;
     postPerPage=2;
     pageSizeOption = [1,2,5,10];
     currentPage=1;
@@ -23,8 +23,10 @@ private postSub :Subscription;
     this.isloading =true;
      this.postsService.getPosts(this.postPerPage,this.currentPage);
     this.postSub= this.postsService.getPostsUpdateListener()
-      .subscribe((posts: Post[]) => {
-        this.post = posts;
+      .subscribe((postData:{posts:Post[] ,postCount :number}) => {
+        debugger;
+        this.post = postData.posts;
+        this.totoalPost = postData.postCount;
        this.isloading=false;
       },
         error => {}
@@ -33,7 +35,11 @@ private postSub :Subscription;
 
   onDelete(postId:string){
     debugger; 
-    this.postsService.deletePost(postId);
+    this.isloading = true;
+    this.postsService.deletePost(postId)
+    .subscribe(()=>{
+      this.postsService.getPosts(this.postPerPage,this.currentPage);
+    });
   }
 
   ngOnDestroy(): void {

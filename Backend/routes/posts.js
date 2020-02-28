@@ -46,11 +46,21 @@ router.post("", multer({storage:mystorage}).single("image"),(req, res) => {
         });
 })
 router.get("", (req, res, next) => {
-    PostModel.find()
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.page;
+    const postQuery = PostModel.find()
+    if(pageSize && currentPage) {
+      postQuery
+      .skip(pageSize * currentPage)
+      .limit(pageSize);
+    }
+    postQuery.find()
         .then(document => {
-            res.status(200).json({
-                message: 'Message',
-                posts: document
+           PostModel.count();
+        }).then(count => {
+            res.send(200).json({
+                message:"posts fetched successfully",
+                post:document
             })
         });
 })

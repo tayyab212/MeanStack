@@ -10,9 +10,9 @@ export class PostsService {
     }
     private posts: Post[] = [];
     private postsUpdated = new Subject<Post[]>();
-    getPosts() {
-        debugger;
-        this.client.get<{ message: string, posts: any }>('http://localhost:3000/api/posts')
+    getPosts(postsPerPage:number,currentPage:number) {
+        const queryParams = `?pageSize=${postsPerPage}&page=${currentPage}`
+        this.client.get<{ message: string, posts: any }>('http://localhost:3000/api/posts'+queryParams)
             .pipe(map((postData) => {
                 return postData.posts.map(post => {
                     return {

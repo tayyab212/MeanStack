@@ -12,12 +12,14 @@ import { HeaderComponent } from './header/header/header.component';
 import { PostlistComponent } from './posts/postlist/postlist/postlist.component';
 import { PostsService } from './posts/post.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
     PostlistComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatExpansionModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule
   ],
   providers: [PostsService],
   bootstrap: [AppComponent]

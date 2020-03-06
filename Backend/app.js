@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const postRoutes = require('../Backend/routes/posts')
+const userRouter = require('../Backend/routes/users');
 const mongoose = require('mongoose');
 const path = require('path')
-const userRouter = require('../Backend/routes/users');
 
 mongoose.connect("mongodb+srv://max:password212@cluster0-ihg7a.mongodb.net/test?retryWr ites=true&w=majority")
     .then(() => {
@@ -27,8 +27,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use("/api/posts",postRoutes);
 app.use("/api/user",userRouter);
+app.use("/api/posts",postRoutes);
 
 module.exports = app;
 

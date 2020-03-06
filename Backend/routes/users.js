@@ -61,6 +61,6 @@ let fetchedUser;
                 message: "Auth Failed"
             })
         })
-})
+});
 
 module.exports = router

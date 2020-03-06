@@ -14,6 +14,7 @@ import { PostsService } from './posts/post.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login/login.component';
 import { SigupComponent } from './Auth/Signup/sigup/sigup.component';
+import { AuthService } from './auth/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,7 @@ import { SigupComponent } from './Auth/Signup/sigup/sigup.component';
     MatPaginatorModule,
     FormsModule
   ],
-  providers: [PostsService],
+  providers: [PostsService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

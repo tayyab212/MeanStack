@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthserviceService } from '../../authservice.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-sigup',
@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 })
 export class SigupComponent implements OnInit {
   public isloading =false;
-  constructor(private authService:AuthserviceService) { }
+  constructor(private authService:AuthService) { }
 
   ngOnInit() {
   }

@@ -9,7 +9,7 @@ import { AuthService } from '../../auth.service';
 })
 export class SigupComponent implements OnInit {
   public isloading =false;
-  constructor(private authService:AuthService) { }
+  constructor(private auth:AuthService) { }
 
   ngOnInit() {
   }
@@ -17,7 +17,7 @@ export class SigupComponent implements OnInit {
     debugger;
     if(form.invalid)
     return;
-    this.authService.createUser(form.value.email,form.value.password);
+    this.auth.createUser(form.value.email,form.value.password);
   }
 
 }

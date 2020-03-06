@@ -4,7 +4,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 
-router.put("/signup", (req, res, next) => {
+router.post("/signup", (req, res, next) => {
+    console.log("singup")
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -28,8 +29,8 @@ router.put("/signup", (req, res, next) => {
 
 });
 
-router.post("/loign", (req, res, next) => {
-    console.log(req.body.email)
+router.post("/login", (req, res, next) => {
+    console.log("login")
 let fetchedUser;
     User.findOne({
         email: req.body.email

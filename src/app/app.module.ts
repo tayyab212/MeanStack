@@ -13,6 +13,7 @@ import { PostlistComponent } from './posts/postlist/postlist/postlist.component'
 import { PostsService } from './posts/post.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login/login.component';
+import { SigupComponent } from './Auth/Signup/sigup/sigup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { LoginComponent } from './auth/login/login/login.component';
     HeaderComponent,
     PostlistComponent,
     LoginComponent,
+    SigupComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,10 +11,11 @@ import {MatInputModule} from '@angular/material/input';
 import { HeaderComponent } from './header/header/header.component';
 import { PostlistComponent } from './posts/postlist/postlist/postlist.component';
 import { PostsService } from './posts/post.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login/login.component';
 import { SigupComponent } from './Auth/Signup/sigup/sigup.component';
 import { AuthService } from './auth/auth.service';
+import { authInterceptor } from './Auth/auth-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,9 @@ import { AuthService } from './auth/auth.service';
     MatPaginatorModule,
     FormsModule
   ],
-  providers: [PostsService,AuthService],
+  providers: [PostsService,AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: authInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

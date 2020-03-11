@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const PostModel = require('../models/post')
 const multer = require('multer');
-
+const checkAuth = require('../middleware/check-auth')
 const MIME_TYPE_MAP = {
     'image/png':'png',
     'image/jpeg':'jpg',
@@ -25,7 +25,8 @@ const mystorage = multer.diskStorage({
     }
 })
 
-router.post("", multer({storage:mystorage}).single("image"),(req, res) => {
+router.post("", checkAuth,
+ multer({storage:mystorage}).single("image"),(req, res) => {
     const url = req.protocol + "//:" + req.get("host");
     const post = new PostModel({
         title: req.body.title,

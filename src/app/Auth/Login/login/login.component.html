@@ -16,6 +16,6 @@
             <mat-error *ngIf="pass.invalid"> Please enter content </mat-error>
         </mat-form-field>
         <br />
-        <button color="primary" mat-raised-button type="submit">Login</button>
+        <button color="primary" mat-raised-button type="submit" *ngIf="!isloading">Login</button>
     </form>
 </mat-card>

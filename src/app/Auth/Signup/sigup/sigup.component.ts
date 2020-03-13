@@ -15,6 +15,7 @@ export class SigupComponent implements OnInit {
   }
   onSignup(form:NgForm){
     debugger;
+    this.isloading =true;
     if(form.invalid)
     return;
     this.auth.createUser(form.value.email,form.value.password);

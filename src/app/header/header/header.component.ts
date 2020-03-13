@@ -19,7 +19,9 @@ userIsAuthenticated =false;
       }
     );
   }
-ngOnDestroy(){
 
-}
+  onLogout(){
+  this.authSerive.onLogout();
+  }
+ngOnDestroy(){}
 }

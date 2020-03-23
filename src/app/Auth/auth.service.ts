@@ -10,7 +10,7 @@ import { Data } from 'Backend/configuration';
   providedIn: 'root'
 })
 export class AuthService {
-  private token: string;
+  public token: string;
   private isAuthenticated: boolean = false;
   private authStatusListener = new Subject<boolean>();
   private tokenTimer: any;
@@ -106,5 +106,4 @@ private setAuthTimer(duration:number){
       expirationDate: new Date(expirationDate)
     }
   }
-
 }

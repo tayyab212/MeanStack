@@ -40,8 +40,9 @@ import { authInterceptor } from './Auth/auth-interceptor';
     MatPaginatorModule,
     FormsModule
   ],
-  providers: [PostsService,AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: authInterceptor,multi:true}
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: authInterceptor,multi:true},
+    PostsService,AuthService,
   ],
   bootstrap: [AppComponent]
 })

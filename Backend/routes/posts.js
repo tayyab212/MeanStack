@@ -27,12 +27,15 @@ const mystorage = multer.diskStorage({
 
 router.post("", checkAuth,
  multer({storage:mystorage}).single("image"),(req, res) => {
+     debugger;
     const url = req.protocol + "//:" + req.get("host");
     const post = new PostModel({
         title: req.body.title,
         content: req.body.content,
         imagePath: "http://localhost:3000"+ "/images/" +req.file.filename
     });
+    console.log(req.userData);
+    return res.status(200).json({});
     console.log("New Post"+post)
     post.save()
         .then(createdPost => {

@@ -32,7 +32,8 @@ router.post("", checkAuth,
     const post = new PostModel({
         title: req.body.title,
         content: req.body.content,
-        imagePath: "http://localhost:3000"+ "/images/" +req.file.filename
+        imagePath: "http://localhost:3000"+ "/images/" +req.file.filename, 
+        creator :req.userData.userId       
     });  
     console.log("New Post"+post)
     post.save()

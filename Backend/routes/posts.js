@@ -33,9 +33,7 @@ router.post("", checkAuth,
         title: req.body.title,
         content: req.body.content,
         imagePath: "http://localhost:3000"+ "/images/" +req.file.filename
-    });
-    console.log(req.userData);
-    return res.status(200).json({});
+    });  
     console.log("New Post"+post)
     post.save()
         .then(createdPost => {

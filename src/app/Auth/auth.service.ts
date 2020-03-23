@@ -10,15 +10,13 @@ import { Data } from 'Backend/configuration';
   providedIn: 'root'
 })
 export class AuthService {
-  public token: string;
+  public token: string ="";
   private isAuthenticated: boolean = false;
   private authStatusListener = new Subject<boolean>();
   private tokenTimer: any;
   constructor(private client: HttpClient, private router: Router) { }
 
-  getToken() {
-    return this.token;
-  }
+ 
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
@@ -36,20 +34,20 @@ export class AuthService {
     const logindata: AuthData = { email: email, password: password };
     this.client.post<{ token: string, expiresIn: number }>("http://localhost:3000/api/user/login", logindata)
       .subscribe(response => {
-        const token = response.token;
-        this.token = token;
-        if (token) {
+        const tok = response.token;
+        this.token = tok;
+        if (tok) {
           debugger;
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
           console.log(expiresInDuration);
-          console.log(token);
+          console.log(tok);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
-          this.saveAuthData(token, expirationDate);
+          this.saveAuthData(tok, expirationDate);
           this.router.navigate(["/"]);
         }
       })
@@ -96,7 +94,8 @@ private setAuthTimer(duration:number){
 }
 
   private getAuthData() {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
+    this.token = token;
     const expirationDate = localStorage.getItem("expiration")
     if (!token || !expirationDate) {
       return;
@@ -106,4 +105,10 @@ private setAuthTimer(duration:number){
       expirationDate: new Date(expirationDate)
     }
   }
+
+  getToken() {
+    return this.getAuthData();
+  }
+
+
 }

@@ -102,7 +102,8 @@ router.put("/:id",
             _id: req.body.id,
             title: req.body.title,
             content: req.body.content,
-            imagePath: ImagePath
+            imagePath: ImagePath,
+            creator :req.userData.userId
         });
         console.log("Updated Post :" + post);
         PostModel.updateOne({ _id: req.body.id, creator: req.userData.userId }, post)

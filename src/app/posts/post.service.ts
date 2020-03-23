@@ -57,7 +57,7 @@ export class PostsService {
     }
 
     getPost(id: string) {
-        return this.client.get<{ _id: string, title: string, content: string,imagePath:string }>("http://localhost:3000/api/posts/" + id);
+        return this.client.get<{ _id: string, title: string, content: string,imagePath:string,creator:string }>("http://localhost:3000/api/posts/" + id);
     }
 
     updatePost(id: string, title: string, conten: string, image: File | string){
@@ -74,7 +74,8 @@ export class PostsService {
                 id: id,
                 title: title,
                 conten: conten,
-                image: image
+                image: image,
+                creator:null
             }
         }
 
